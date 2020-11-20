@@ -1,12 +1,13 @@
+
 int VRx = A0;
 int VRy = A1;
 int SW = 2;
 
-byte xPosition = 0;
-byte yPosition = 0;
+int xPosition = 0;
+int yPosition = 0;
 int SW_state = 0;
-int mapX = 0;
-int mapY = 0;
+byte mapX = 0;
+byte mapY = 0;
 
 void setup()
 {
@@ -19,6 +20,7 @@ void setup()
 
 void loop()
 {
+  //Ler a posição do analogo
   xPosition = analogRead(VRx);
   yPosition = analogRead(VRy);
 
@@ -27,9 +29,9 @@ void loop()
   Serial.print("||||");
   Serial.println(yPosition);
   */
-
+  //detetar se o joystick esta a ser pressionado
   SW_state = digitalRead(SW);
-
+  //map e uma função do arduino que permite associar valores (neste caso lidos no analogo) para um determinado intervalo de valores.
   mapX = map(xPosition, 0, 1023, 0, 1023);
   mapY = map(yPosition, 0, 1023, 0, 1023);
 
