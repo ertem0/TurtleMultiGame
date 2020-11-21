@@ -1,18 +1,25 @@
 import socket
-import time
+import threading
 
-server_ip = "127.0.0.1" #socket.gethostname()
-port = 12345
+SERVER_IP = socket.gethostbyname(socket.gethostname()) #socket.gethostname()
+PORT = 12345
+ADDR = (SERVER_IP, PORT)
 
-with socket.socket(socket.AF_INET) as s:
-    s.bind((server_ip, port))
-    s.listen(4)
-    print("listening for connections")
-    conn, adrr = s.accept()
-    with conn:
-        print("got a connection from", adrr)
-        conn.sendall(b"thank you for connecting")
-        conn.close()
+def handle_client(conn, addr):
+    pass
+
+def start_server(_server):
+    _server.listen()
+    while True:
+        print("[STARTING] server is starting...")
+        conn, addr = _server.accept()
+        thread = threading.Thread(target=handle_client, args=(conn, addr))
+
+server = socket.socket(socket.AF_INET)
+server.bind(ADDR)
+
+startserver(server)
+
+
 
 print("done!")
-        
