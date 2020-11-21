@@ -1,5 +1,6 @@
 import turtle as tl
 import random
+from turtle import speed
 
 import serial
 
@@ -29,14 +30,15 @@ def mainloop():
             inputs = datastring.split("|")
             # passing the data from the inputs, the acc factor and the rotation factor
 
-            player.walk(inputs, 5, 20)
+            player.walk(inputs, 10, 20)
 
 
 class Player:
-    def __init__(self, color, id=None):
+    def __init__(self, color, id=None, speed=10):
         self.player = tl.Pen()
         self.player.up()
 
+        self.player.speed(speed)
         self.color = color
         self.id = id  # para representar o ip do player
         self.player.color(color)
@@ -46,29 +48,30 @@ class Player:
         self.player.seth(90)
 
     def walk(self, inputs, acc, rot):
+        THREASHOLD = 150
         # inputs is the default string
         # acc is the acceleration factor
         # rot is the rotation factor
-        forward = int(inputs[0])
-        direction = int(inputs[1])
+        direction = int(inputs[0])
+        forward = int(inputs[1])
         shoot = int(inputs[2])
 
-        if -50 > forward > 50:
+        if -THREASHOLD > forward > THREASHOLD:
             self.player.forward(0)
         else:
             # print(forward)
-            if forward > 50:
-                self.player.forward(acc)
-            elif forward < -50:
+            if forward > THREASHOLD:
                 self.player.forward(-acc)
+            elif forward < -THREASHOLD:
+                self.player.forward(acc)
 
-        if -50 > direction > 50:
+        if -THREASHOLD > direction > THREASHOLD:
             self.player.left(0)
         else:
             # print(direction)
-            if direction > 50:
+            if direction > THREASHOLD:
                 self.player.left(rot)
-            elif direction < -50:
+            elif direction < -THREASHOLD:
                 self.player.left(-rot)
 
         if shoot == 1:
