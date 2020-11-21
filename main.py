@@ -1,6 +1,5 @@
 import turtle as tl
 
-import requests
 import serial
 
 VRx = "A0"
@@ -10,6 +9,7 @@ SW = 2
 PORT = "COM3"
 SPEED = 9600
 arduino = serial.Serial(PORT, SPEED)
+
 tl.screensize(800, 600)
 
 
