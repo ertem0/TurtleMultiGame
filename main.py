@@ -1,8 +1,7 @@
 import turtle as tl
 import random
-from turtle import speed
-
 import serial
+import threading
 
 VRx = "A0"
 VRy = "A1"
@@ -14,13 +13,16 @@ arduino = serial.Serial(PORT, SPEED)
 
 tl.screensize(800, 600)
 
-COLORS = ("red", "yellow", "blue", "orange",
+COLORS = ("red", "blue", "orange",
           "black", "green", "brown", "purple")
 
 
 def mainloop():
     color = random.choice(COLORS)
     player = Player(color)
+
+    player.setup()
+
     while True:
         # the last bit gets rid of the new-line chars
         data = arduino.readline()[:-2]
@@ -34,11 +36,10 @@ def mainloop():
 
 
 class Player:
-    def __init__(self, color, id=None, speed=10):
+    def __init__(self, color, id=None):
         self.player = tl.Pen()
         self.player.up()
 
-        self.player.speed(speed)
         self.color = color
         self.id = id  # para representar o ip do player
         self.player.color(color)
@@ -56,23 +57,28 @@ class Player:
         forward = int(inputs[1])
         shoot = int(inputs[2])
 
+        # usar threading para separar movimentos da frente para tras
         if -THREASHOLD > forward > THREASHOLD:
             self.player.forward(0)
         else:
             # print(forward)
             if forward > THREASHOLD:
-                self.player.forward(-acc)
+                for i in range(acc):
+                    self.player.forward(-1)
             elif forward < -THREASHOLD:
-                self.player.forward(acc)
+                for i in range(acc):
+                    self.player.forward(1)
 
         if -THREASHOLD > direction > THREASHOLD:
             self.player.left(0)
         else:
             # print(direction)
             if direction > THREASHOLD:
-                self.player.left(rot)
+                for i in range(rot):
+                    self.player.left(1)
             elif direction < -THREASHOLD:
-                self.player.left(-rot)
+                for i in range(rot):
+                    self.player.left(-1)
 
         if shoot == 1:
             print("Do stuff")
