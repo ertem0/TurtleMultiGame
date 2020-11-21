@@ -1,13 +1,18 @@
-
-
 import socket
-import time
+import threading
 
-server_ip = "127.0.0.1" #socket.gethostname()
-port = 12345
+SERVER_IP = "192.168.1.91"
+PORT = 12345
+ADDR = (SERVER_IP, PORT)
+FORMAT = "utf-8"
 
-with socket.socket(socket.AF_INET) as s:
-    s.connect((server_ip, port))
-    data = s.recv(1024)
+def get_server_data(_client):
+    connected = True
+    while connected:
+        data = _client.recv(2048).decode(FORMAT)
 
-print("[From server]", data)
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(ADDR)
+
+thread = threading.Thread(target=get_server_data, args=client)
+
