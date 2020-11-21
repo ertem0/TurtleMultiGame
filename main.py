@@ -38,7 +38,7 @@ class Player:
         self.player = tl.Pen()
         self.player.up()
 
-        self.player.speed = 5
+        self.player.speed(speed)
         self.color = color
         self.id = id  # para representar o ip do player
         self.player.color(color)
@@ -61,7 +61,7 @@ class Player:
         else:
             # print(forward)
             if forward > THREASHOLD:
-                self.player.forward(acc)
+                self.player.forward(-acc)
             elif forward < -THREASHOLD:
                 self.player.forward(acc)
 
