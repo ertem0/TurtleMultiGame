@@ -1,5 +1,5 @@
 {
-    "sketch": "joystick.ino",
+    "sketch": "arduino_multiplayer_game\\arduino_multiplayer_game.ino",
     "board": "arduino:avr:uno",
     "port": "COM3",
     "programmer": "AVR ISP"
