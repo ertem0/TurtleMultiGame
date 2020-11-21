@@ -34,7 +34,7 @@ def mainloop():
 
 
 class Player:
-    def __init__(self, color, id=None, speed=10, THREASHOLD=150):
+    def __init__(self, color, id=None, speed=10):
         self.player = tl.Pen()
         self.player.up()
 
@@ -48,7 +48,7 @@ class Player:
         self.player.seth(90)
 
     def walk(self, inputs, acc, rot):
-        THREASHOLD = self.THREASHOLD
+        THREASHOLD = 150
         # inputs is the default string
         # acc is the acceleration factor
         # rot is the rotation factor
