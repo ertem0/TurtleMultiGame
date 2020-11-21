@@ -5,7 +5,7 @@ SERVER_IP = socket.gethostbyname(socket.gethostname())
 PORT = 12345
 ADDR = (SERVER_IP, PORT)
 FORMAT = "utf-8"
-DISCONNECT_MSG = "!DISCONECT"
+DISCONNECT_MSG = "!DISCONNECT"
 
 def handle_client(conn, addr):
     print(f"[NEW CONNECTION] {addr} has connected.")
@@ -18,14 +18,16 @@ def handle_client(conn, addr):
             connected = False
 
     conn.close()
+    print(f"[CONNECTION] {addr} Connection closed.")
 
 def start_server(_server):
     print("[STARTING] Server is starting...")
     _server.listen()
-    print(f"[LISTENING] Server is listening on {SERVER_IP}")
+    print(f"[LISTENING] Server is listening on {SERVER_IP}.")
     while True:
         conn, addr = _server.accept()
-        thread = threading.Thread(target=handle_client, args=(conn, addr))
+        thread = threading.Thread(target=handle_client, args=(conn, addr,))
+        thread.start()
         print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
