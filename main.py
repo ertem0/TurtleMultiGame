@@ -60,7 +60,7 @@ class Player:
             if forward > 50:
                 self.player.forward(acc)
             elif forward < -50:
-                self.player.forward(acc)
+                self.player.forward(-acc)
 
         if -50 > direction > 50:
             self.player.left(0)
