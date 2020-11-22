@@ -1,9 +1,10 @@
 import turtle as tl
-from main import *
-
 
 class Player:
-    def __init__(self, color, id=None):
+    COLORS = ("red", "blue", "orange",
+          "black", "green", "brown", "purple")
+
+    def __init__(self, color, window,id=None):
         self.player = tl.Pen()
         self.player.up()
 
@@ -11,22 +12,23 @@ class Player:
         self.id = id  # para representar o ip do player
         self.player.color(color)
 
+        self.window = window
     def setup(self):
         self.player.goto(0, 0)
         self.player.seth(90)
 
     def out_of_bounds(self):
-        if self.player.xcor() > WIDTH//2:
-            self.player.setpos(-WIDTH//2, self.player.ycor())
+        if self.player.xcor() > self.window.WIDTH//2:
+            self.player.setpos(-self.window.WIDTH//2, self.player.ycor())
 
-        if self.player.xcor() < -WIDTH//2:
-            self.player.setpos(WIDTH//2, self.player.ycor())
+        if self.player.xcor() < -self.window.WIDTH//2:
+            self.player.setpos(self.window.WIDTH//2, self.player.ycor())
 
-        if self.player.ycor() > HEIGHT//2:
-            self.player.setpos(self.player.xcor(), -HEIGHT//2)
+        if self.player.ycor() > self.window.HEIGHT//2:
+            self.player.setpos(self.player.xcor(), -self.window.HEIGHT//2)
 
-        if self.player.ycor() < -HEIGHT//2:
-            self.player.setpos(-self.player.xcor(), HEIGHT//2)
+        if self.player.ycor() < -self.window.HEIGHT//2:
+            self.player.setpos(-self.player.xcor(), self.window.HEIGHT//2)
 
     def walk(self, inputs, acc, rot):
         self.out_of_bounds()

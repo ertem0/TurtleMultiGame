@@ -4,7 +4,8 @@ import turtle as tl
 
 import serial
 
-import Player
+from Window import Window
+from Player import Player
 
 VRx = "A0"
 VRy = "A1"
@@ -12,25 +13,14 @@ SW = 2
 
 PORT = "COM3"
 SPEED = 9600
-arduino = serial.Serial(PORT, SPEED)
-
-WIDTH = 800
-HEIGHT = 600
-tl.title("GAME OF THE GAME OF THE GAME")
-tl.screensize(WIDTH, HEIGHT)
-tl.speed(100)
-
-COLORS = ("red", "blue", "orange",
-          "black", "green", "brown", "purple")
-
 
 def is_collided_with(self, run):
     return self.rect.colliderect(run.rect)
 
 
 def mainloop():
-    color = random.choice(COLORS)
-    player = Player(color)
+    color = random.choice(Player.COLORS)
+    player = Player(color, window=game_window)
 
     player.setup()
 
@@ -47,4 +37,6 @@ def mainloop():
 
 
 if __name__ == "__main__":
+    arduino = serial.Serial(PORT, SPEED)
+    game_window = Window()
     mainloop()
