@@ -1,7 +1,10 @@
-import turtle as tl
 import random
-import serial
 import threading
+import turtle as tl
+
+import serial
+
+import Player
 
 VRx = "A0"
 VRy = "A1"
@@ -11,10 +14,18 @@ PORT = "COM3"
 SPEED = 9600
 arduino = serial.Serial(PORT, SPEED)
 
-tl.screensize(800, 600)
+WIDTH = 800
+HEIGHT = 600
+tl.title("GAME OF THE GAME OF THE GAME")
+tl.screensize(WIDTH, HEIGHT)
+tl.speed(100)
 
 COLORS = ("red", "blue", "orange",
           "black", "green", "brown", "purple")
+
+
+def is_collided_with(self, run):
+    return self.rect.colliderect(run.rect)
 
 
 def mainloop():
@@ -35,53 +46,5 @@ def mainloop():
             player.walk(inputs, 10, 20)
 
 
-class Player:
-    def __init__(self, color, id=None):
-        self.player = tl.Pen()
-        self.player.up()
-
-        self.color = color
-        self.id = id  # para representar o ip do player
-        self.player.color(color)
-
-    def setup(self):
-        self.player.goto(0, 0)
-        self.player.seth(90)
-
-    def walk(self, inputs, acc, rot):
-        THREASHOLD = 150
-        # inputs is the default string
-        # acc is the acceleration factor
-        # rot is the rotation factor
-        direction = int(inputs[0])
-        forward = int(inputs[1])
-        shoot = int(inputs[2])
-
-        # usar threading para separar movimentos da frente para tras
-        if -THREASHOLD > forward > THREASHOLD:
-            self.player.forward(0)
-        else:
-            # print(forward)
-            if forward > THREASHOLD:
-                for i in range(acc):
-                    self.player.forward(-1)
-            elif forward < -THREASHOLD:
-                for i in range(acc):
-                    self.player.forward(1)
-
-        if -THREASHOLD > direction > THREASHOLD:
-            self.player.left(0)
-        else:
-            # print(direction)
-            if direction > THREASHOLD:
-                for i in range(rot):
-                    self.player.left(1)
-            elif direction < -THREASHOLD:
-                for i in range(rot):
-                    self.player.left(-1)
-
-        if shoot == 1:
-            print("Do stuff")
-
-
-mainloop()
+if __name__ == "__main__":
+    mainloop()
