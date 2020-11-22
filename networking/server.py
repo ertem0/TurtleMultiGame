@@ -12,7 +12,11 @@ def handle_client(conn, addr):
     
     connected = True
     while connected:
-        data = conn.recv(1240).decode(FORMAT)
+        try:
+            data = conn.recv(1240).decode(FORMAT)
+        except ConnectionResetError:
+            data = DISCONNECT_MSG
+            
         print(f"[{addr}]{data}")
         if data == DISCONNECT_MSG:
             connected = False
