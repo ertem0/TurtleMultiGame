@@ -6,6 +6,9 @@ class Client:
     PORT = 12345
     ADDR = (SERVER_IP, PORT)
     FORMAT = "utf-8"
+    DISCONNECT_MSG = "!DISCONNECT"
+    
+    connected = False
     raw_data = b""
 
     def __init__(self, player = None):
@@ -15,16 +18,31 @@ class Client:
         self.client.connect(self.ADDR)
         print(f"[CONNECTING] client is connecting to {self.SERVER_IP}.")
 
-        thread = threading.Thread(target=self.get_server_data)
-        thread.start()
+        self.connected = True
+
+        getter_thread = threading.Thread(target=self.get_server_data)
+        getter_thread.start()
+        sender_thread = threading.Thread(target=self.send_server_data)
+        sender_thread.start()
 
     def get_server_data(self):
-        print("yo")
-        connected = True
-        while connected:
-            #raw_data = client.recv(2048).decode(FORMAT)
-            self.client.send(input().encode(self.FORMAT))
-            print(self.raw_data)
+        print("[GETTING DATA]")
+        while self.connected:
+            data = self.client.recv(2048).decode(self.FORMAT)
+            if data == self.DISCONNECT_MSG:
+                self.connected = False
+
+            print(f"[DATA] {data}")
+
+        self.client.close()
+        
+
+    def send_server_data(self):
+        print("[SENDING DATA]")
+        while self.connected:
+            data = input().encode(self.FORMAT)
+            if self.connected:
+                self.client.send(data)
 
 
 client = Client()
