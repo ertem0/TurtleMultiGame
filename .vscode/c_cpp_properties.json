@@ -8,7 +8,9 @@
                 "C:\\Program Files (x86)\\Arduino\\tools\\**",
                 "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
                 "E:\\Arduino\\hardware\\arduino\\avr\\**",
-                "E:\\Arduino\\tools\\**"
+                "E:\\Arduino\\tools\\**",
+                "C:\\Users\\Utilizador\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.5.0\\**",
+                "C:\\Users\\Utilizador\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**"
             ],
             "forcedInclude": [],
             "intelliSenseMode": "msvc-x64",
