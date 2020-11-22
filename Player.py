@@ -1,19 +1,27 @@
 import turtle as tl
+from networking.Client import Client
 
-class Player:
+
+class Player(Client):
     COLORS = ("red", "blue", "orange",
           "black", "green", "brown", "purple")
 
-    def __init__(self, color, window,id=None):
-        self.player = tl.Pen()
-        self.player.up()
+    def __init__(self, window,color="black",id=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
         self.color = color
+        
         self.id = id  # para representar o ip do player
-        self.player.color(color)
+
+        self.health = 100
+        self.damage = 25
 
         self.window = window
+
     def setup(self):
+        self.player = tl.Pen()
+        self.player.up()
+        self.player.color(self.color)
         self.player.goto(0, 0)
         self.player.seth(90)
 
@@ -61,3 +69,11 @@ class Player:
 
         if shoot == 1:
             print("Do stuff")
+
+    def take_damage(self, amount):
+        self.health -= amount
+        if self.health <= 0:
+            self.die()
+    
+    def die(self):
+        self.player.hide()

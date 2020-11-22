@@ -7,6 +7,7 @@ class Server:
     ADDR = (SERVER_IP, PORT)
     FORMAT = "utf-8"
     DISCONNECT_MSG = "!DISCONNECT"
+    is_online = False
 
     current_connections = []
 
@@ -15,7 +16,6 @@ class Server:
         
         self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.server.bind(self.ADDR)
-        self.start_server()
 
     def handle_client(self, conn, addr):
         print(f"[NEW CONNECTION] {addr} has connected.")
@@ -46,11 +46,13 @@ class Server:
         print("[STARTING] Server is starting...")
         self.server.listen()
         print(f"[LISTENING] Server is listening on {self.SERVER_IP}.")
+        self.is_online = True
+
         while True:
             conn, addr = self.server.accept()
             thread = threading.Thread(target=self.handle_client, args=(conn, addr,))
             thread.start()
-            print(f"[ACTIVE CONNECTIONS] {threading.activeCount() - 1}")
+            print(f"[ACTIVE CONNECTIONS] {len(current_connections)}")
 
     def send_all_conn(self, data, sender):
         print(self.current_connections)
@@ -59,4 +61,4 @@ class Server:
                 conn.send(data.encode(self.FORMAT))
 
 
-server = Server()
+#server = Server()
