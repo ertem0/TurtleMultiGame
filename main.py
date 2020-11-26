@@ -38,20 +38,24 @@ def mainloop(player):
 
 
 if __name__ == "__main__":
-    arduino = serial.Serial(PORT, SPEED)
+    #ACHO QUE COM O TIMEOUT AGORA VAI DAR
+    arduino = serial.Serial(PORT, SPEED,timeout=0.1)
     game_window = Window()
     game_window.start_menu()
     option = input()
     game_window.clear_window()
+
     if option == "1":
         player = Player(window=game_window)
         player.connect()
         if player.connected:
             mainloop(player)
+
     if option == "2":
         server = Server()
         thread = threading.Thread(target=server.start_server)
         thread.start()
+        
         #while works as an await
         while not server.is_online:
             print(server.is_online)
