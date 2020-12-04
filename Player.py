@@ -25,6 +25,9 @@ class Player(Client):
         self.player.goto(0, 0)
         self.player.seth(90)
 
+        #drawing the out of bounds line:
+        
+
     def out_of_bounds(self):
         if self.player.xcor() > self.window.WIDTH//2:
             self.player.setpos(-self.window.WIDTH//2, self.player.ycor())
@@ -68,6 +71,7 @@ class Player(Client):
                 self.player.left(-rot)
 
         if shoot == 1:
+            #Joystick is being pressed
             print("Do stuff")
 
     def take_damage(self, amount):
