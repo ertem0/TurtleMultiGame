@@ -12,7 +12,8 @@ VRy = "A1"
 SW = 2
 
 PORT = "COM3"
-SPEED = 9600
+SPEED = 115200
+
 
 def is_collided_with(self, run):
     return self.rect.colliderect(run.rect)
@@ -38,6 +39,7 @@ def mainloop(player):
 
 
 if __name__ == "__main__":
+
     arduino = serial.Serial(PORT, SPEED)
     game_window = Window()
     game_window.start_menu()

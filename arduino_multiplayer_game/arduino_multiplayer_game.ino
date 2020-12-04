@@ -1,4 +1,3 @@
-
 int VRx = A0;
 int VRy = A1;
 int SW = 2;
@@ -9,11 +8,9 @@ int SW_state = 0;
 int mapX = 0;
 int mapY = 0;
 
-
-
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   pinMode(VRx, INPUT);
   pinMode(VRy, INPUT);
@@ -31,16 +28,15 @@ void loop()
   Serial.print("||||");
   Serial.println(yPosition);
   */
-  
+
   //detetar se o joystick esta a ser pressionado
   SW_state = !digitalRead(SW);
   //map e uma função do arduino que permite associar valores (neste caso lidos no analogo) para um determinado intervalo de valores.
   mapX = map(xPosition, 0, 1023, -512, 512);
   mapY = map(yPosition, 0, 1023, 512, -512);
-  
-  //assim conseguimos passar os valores do arduino para o python.
-  Serial.println((String) mapX+"|"+(String) mapY+"|"+(String)SW_state);
 
+  //assim conseguimos passar os valores do arduino para o python.
+  Serial.println((String)mapX + "|" + (String)mapY + "|" + (String)SW_state);
 
   delay(100);
 }
